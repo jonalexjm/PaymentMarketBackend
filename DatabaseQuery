@@ -1,1 +1,88 @@
+create table type_document(
+    id_type_document SERIAL primary key ,
+    type_document varchar(50)
+);
+
+create table annio(
+    id_annio SERIAL primary key ,
+    annio int
+);
+
+create table rol(
+    id_rol SERIAL primary key ,
+    rol_name varchar(50)
+);
+
+create table type_identification(
+    id_type_identification SERIAL primary key ,
+    type_identification varchar(50)
+);
+
+create table country(
+    id_country SERIAL primary key ,
+    country varchar(50)
+);
+
+create table state(
+    id_state SERIAL primary key ,
+    state varchar(50),
+    id_country INTEGER REFERENCES  country (id_country)
+);
+
+create table city(
+    id_city SERIAL primary key ,
+    city varchar(50),
+    id_state INTEGER REFERENCES  state (id_state)
+);
+
+create table neighborhood(
+    id_neighborhood SERIAL primary key ,
+    neighborhood varchar(50),
+    id_city INTEGER REFERENCES  city (id_city)
+);
+
+create table market(
+    id_market SERIAL primary key ,
+    market varchar(50),
+    id_neighborhood INTEGER REFERENCES  neighborhood (id_neighborhood)
+);
+
+create table users(
+    id_user SERIAL primary key ,
+    number_document varchar(50),
+    name varchar(50),
+    lastname varchar(50),
+    phone varchar(25),
+    address varchar(60),
+    id_type_document INTEGER REFERENCES  type_document(id_type_document),
+    id_type_identification INTEGER REFERENCES type_identification(id_type_identification),
+    id_city INTEGER REFERENCES  city(id_city)
+
+);
+
+
+create table user_rol(
+    id_user_rol SERIAL primary key ,
+    id_user INTEGER REFERENCES users (id_user),
+    id_rol INTEGER REFERENCES  rol (id_rol)
+);
+
+
+
+create table charge_card(
+    id_charge_card SERIAL primary key ,
+    description varchar(50),
+    valor decimal,
+    id_customer INTEGER REFERENCES users (id_user),
+    id_market INTEGER REFERENCES market (id_market),
+    id_annio INTEGER REFERENCES  annio (id_annio)
+);
+
+create table invoice(
+    id_invoice SERIAL primary key,
+    valor decimal,
+    date timestamp,
+    id_charge_card INTEGER REFERENCES charge_card(id_charge_card),
+    id_cobrador INTEGER REFERENCES users(id_user)
+)
 
