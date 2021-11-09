@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using PaymentMarketBackend.Core.Entities;
 
 #nullable disable
 
@@ -30,15 +31,6 @@ namespace PaymentMarketBackend.Infrastructure.Data
         public virtual DbSet<TypeIdentification> TypeIdentifications { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRol> UserRols { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseNpgsql("Host=localhost; port=5432;Database=dbpaymentmarket;Username=postgres;Password=jonalexjm");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -334,9 +326,9 @@ namespace PaymentMarketBackend.Infrastructure.Data
                     .HasConstraintName("user_rol_id_user_fkey");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        
     }
 }

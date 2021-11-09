@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace PaymentMarketBackend.Infrastructure.Data
+namespace PaymentMarketBackend.Core.Entities
 {
     public partial class City
     {

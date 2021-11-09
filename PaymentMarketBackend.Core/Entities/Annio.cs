@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace PaymentMarketBackend.Infrastructure.Data
+namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class Annio
-    {
+    public partial class Annio : BaseEntity
+    { 
         public Annio()
         {
             ChargeCards = new HashSet<ChargeCard>();

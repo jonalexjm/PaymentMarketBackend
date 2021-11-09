@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using PaymentMarketBackend.Infrastructure.Extensions;
 
 namespace PaymentMarketBackend.Api
 {
@@ -27,6 +28,8 @@ namespace PaymentMarketBackend.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContexts(Configuration);
+            services.AddServices();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "PaymentMarketBackend.Api", Version = "v1"});
