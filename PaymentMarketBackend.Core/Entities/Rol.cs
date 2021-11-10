@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class Rol
+    public partial class Rol : BaseEntity
     {
         public Rol()
         {

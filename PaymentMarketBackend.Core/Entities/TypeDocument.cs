@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class TypeDocument
+    public partial class TypeDocument : BaseEntity
     {
         public TypeDocument()
         {

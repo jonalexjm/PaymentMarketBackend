@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class Invoice
+    public partial class Invoice : BaseEntity
     {
         public int IdInvoice { get; set; }
         public decimal? Valor { get; set; }

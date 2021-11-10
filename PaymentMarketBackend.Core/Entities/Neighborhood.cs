@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class Neighborhood
+    public partial class Neighborhood : BaseEntity
     {
         public Neighborhood()
         {

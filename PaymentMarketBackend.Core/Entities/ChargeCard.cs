@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class ChargeCard
+    public partial class ChargeCard : BaseEntity
     {
         public ChargeCard()
         {

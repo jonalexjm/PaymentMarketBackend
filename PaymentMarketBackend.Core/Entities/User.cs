@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class User
+    public partial class User : BaseEntity
     {
         public User()
         {
@@ -21,12 +21,10 @@ namespace PaymentMarketBackend.Core.Entities
         public string Phone { get; set; }
         public string Address { get; set; }
         public int? IdTypeDocument { get; set; }
-        public int? IdTypeIdentification { get; set; }
         public int? IdCity { get; set; }
 
         public virtual City IdCityNavigation { get; set; }
         public virtual TypeDocument IdTypeDocumentNavigation { get; set; }
-        public virtual TypeIdentification IdTypeIdentificationNavigation { get; set; }
         public virtual ICollection<ChargeCard> ChargeCards { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual ICollection<UserRol> UserRols { get; set; }

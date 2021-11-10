@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using PaymentMarketBackend.Core.Entities;
 
+
 #nullable disable
 
 namespace PaymentMarketBackend.Infrastructure.Data
@@ -31,6 +32,15 @@ namespace PaymentMarketBackend.Infrastructure.Data
         public virtual DbSet<TypeIdentification> TypeIdentifications { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserRol> UserRols { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseNpgsql("Host=localhost; port=5432;Database=dbpaymentmarket;Username=postgres;Password=jonalexjm");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -268,8 +278,6 @@ namespace PaymentMarketBackend.Infrastructure.Data
 
                 entity.Property(e => e.IdTypeDocument).HasColumnName("id_type_document");
 
-                entity.Property(e => e.IdTypeIdentification).HasColumnName("id_type_identification");
-
                 entity.Property(e => e.Lastname)
                     .HasMaxLength(50)
                     .HasColumnName("lastname");
@@ -295,11 +303,6 @@ namespace PaymentMarketBackend.Infrastructure.Data
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.IdTypeDocument)
                     .HasConstraintName("users_id_type_document_fkey");
-
-                entity.HasOne(d => d.IdTypeIdentificationNavigation)
-                    .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.IdTypeIdentification)
-                    .HasConstraintName("users_id_type_identification_fkey");
             });
 
             modelBuilder.Entity<UserRol>(entity =>
@@ -326,9 +329,7 @@ namespace PaymentMarketBackend.Infrastructure.Data
                     .HasConstraintName("user_rol_id_user_fkey");
             });
 
-            
+       
         }
-
-        
     }
 }

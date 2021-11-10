@@ -5,16 +5,9 @@ using System.Collections.Generic;
 
 namespace PaymentMarketBackend.Core.Entities
 {
-    public partial class TypeIdentification
+    public partial class TypeIdentification : BaseEntity
     {
-        public TypeIdentification()
-        {
-            Users = new HashSet<User>();
-        }
-
         public int IdTypeIdentification { get; set; }
         public string TypeIdentification1 { get; set; }
-
-        public virtual ICollection<User> Users { get; set; }
     }
 }

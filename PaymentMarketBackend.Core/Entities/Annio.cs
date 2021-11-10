@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace PaymentMarketBackend.Core.Entities
 {
     public partial class Annio : BaseEntity
-    { 
+    {
         public Annio()
         {
             ChargeCards = new HashSet<ChargeCard>();
