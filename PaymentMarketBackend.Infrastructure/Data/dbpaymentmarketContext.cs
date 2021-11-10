@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using PaymentMarketBackend.Core.Entities;
+using PaymentMarketBackend.Infrastructure.Data.Configurations;
 
 
 #nullable disable
@@ -44,17 +45,7 @@ namespace PaymentMarketBackend.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Annio>(entity =>
-            {
-                entity.HasKey(e => e.IdAnnio)
-                    .HasName("annio_pkey");
-
-                entity.ToTable("annio");
-
-                entity.Property(e => e.IdAnnio).HasColumnName("id_annio");
-
-                entity.Property(e => e.Annio1).HasColumnName("annio");
-            });
+            modelBuilder.ApplyConfiguration(new AnnioConfiguration());
 
             modelBuilder.Entity<ChargeCard>(entity =>
             {
