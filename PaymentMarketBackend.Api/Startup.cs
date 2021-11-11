@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PaymentMarketBackend.Infrastructure.Extensions;
+using PaymentMarketBackend.Infrastructure.Filters;
 
 namespace PaymentMarketBackend.Api
 {
@@ -28,13 +30,26 @@ namespace PaymentMarketBackend.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddControllers();
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                  //  options.SuppressModelStateInvalidFilter = true; // invalid model state from controller 
+                });
             services.AddDbContexts(Configuration);
             services.AddServices();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "PaymentMarketBackend.Api", Version = "v1"});
             });
+
+            //se hace la validacion de los modelos 
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ValidationFilter>();
+            }).AddFluentValidation(options =>
+             {
+                 options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
