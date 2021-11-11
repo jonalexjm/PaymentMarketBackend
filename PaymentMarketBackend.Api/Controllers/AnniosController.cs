@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PaymentMarketBackend.Core.DTOs;
 using PaymentMarketBackend.Core.Entities;
+using PaymentMarketBackend.Core.Exceptions;
 using PaymentMarketBackend.Core.Interfaces.Services;
 
 namespace PaymentMarketBackend.Api.Controllers
@@ -42,6 +43,11 @@ namespace PaymentMarketBackend.Api.Controllers
         {
             var annio = _mapper.Map<Annio>(annioDto);
             await _annioService.CreateAnnio(annio);
+
+            // if (true)
+            // {
+            //     throw new BusinessExceptions("este es una excepcion de negocio")
+            // }
             
             return Ok();
         }

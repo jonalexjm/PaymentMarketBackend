@@ -30,7 +30,10 @@ namespace PaymentMarketBackend.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddControllers()
+            services.AddControllers(options =>
+                {
+                    options.Filters.Add<GlobalExceptionFilter>();
+                })
                 .ConfigureApiBehaviorOptions(options =>
                 {
                   //  options.SuppressModelStateInvalidFilter = true; // invalid model state from controller 
