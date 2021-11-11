@@ -1,5 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PaymentMarketBackend.Core.DTOs;
+using PaymentMarketBackend.Core.Entities;
 using PaymentMarketBackend.Core.Interfaces.Services;
 
 namespace PaymentMarketBackend.Api.Controllers
@@ -10,19 +16,50 @@ namespace PaymentMarketBackend.Api.Controllers
     public class AnniosController : ControllerBase
     {
         private readonly IAnnioService _annioService;
-        public AnniosController(IAnnioService annioService)
+        private readonly IMapper _mapper;
+        public AnniosController(IAnnioService annioService,
+                                IMapper mapper)
         {
             _annioService = annioService;
+            _mapper = mapper;
         }
         // GET
         [HttpGet("GetAllAnnios")]
+        
         public async Task<IActionResult> GetAllAnnios()
         {
-            var result = await _annioService.GetAllAnnio();
+            var annios = await _annioService.GetAllAnnio();
+            var anniosDto = _mapper.Map<List<AnnioDto>>(annios);
             return Ok(new
             {
-                result
+                anniosDto
             });
         }
+        
+        [HttpGet("CreateAnnio")]
+        
+        public async Task<IActionResult> CreateAnnio(AnnioDto annioDto)
+        {
+            var annio = _mapper.Map<Annio>(annioDto);
+            await _annioService.CreateAnnio(annio);
+            
+            return Ok();
+        }
+        
+        [HttpPut("UpdateAnnio")]
+        public IActionResult UpdateAnnio()
+        {
+            
+            return Ok();
+        }
+        
+        [HttpDelete("DeleteAnnio")]
+        public IActionResult DeleteAnnio()
+        {
+            
+            return Ok();
+        }
+        
+        
     }
 }

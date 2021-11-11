@@ -20,5 +20,12 @@ namespace PaymentMarketBackend.Infrastructure.Services
             return this._unitOfWork.AnnioRepository.GetAll().ToList();
             
         }
+
+        public async Task CreateAnnio(Annio annio)
+        {
+            await  _unitOfWork.AnnioRepository.Add(annio);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        
     }
 }

@@ -8,5 +8,7 @@ namespace PaymentMarketBackend.Core.Interfaces.Services
     public interface IAnnioService
     {
         Task<List<Annio>> GetAllAnnio();
+        Task CreateAnnio(Annio annio);
+
     }
 }
