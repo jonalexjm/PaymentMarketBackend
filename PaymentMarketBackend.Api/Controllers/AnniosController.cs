@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using PaymentMarketBackend.Api.Responses;
 using PaymentMarketBackend.Core.DTOs;
 using PaymentMarketBackend.Core.Entities;
 using PaymentMarketBackend.Core.Exceptions;
 using PaymentMarketBackend.Core.Interfaces.Services;
+using PaymentMarketBackend.Core.QueryFilters;
 
 namespace PaymentMarketBackend.Api.Controllers
 {
@@ -26,15 +29,15 @@ namespace PaymentMarketBackend.Api.Controllers
         }
         // GET
         [HttpGet("GetAllAnnios")]
-        
-        public async Task<IActionResult> GetAllAnnios()
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResponse<List<AnnioDto>>))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ApiResponse<List<AnnioDto>>))]
+        //[FromQuery] sirve para decirle que los filters vienen por query string
+        public async Task<IActionResult> GetAllAnnios([FromQuery]AnnioQueryFilter filters)
         {
-            var annios = await _annioService.GetAllAnnio();
+            var annios = await _annioService.GetAllAnnio(filters);
             var anniosDto = _mapper.Map<List<AnnioDto>>(annios);
-            return Ok(new
-            {
-                anniosDto
-            });
+            var response = new ApiResponse<List<AnnioDto>>(anniosDto);
+            return Ok(response);
         }
         
         [HttpGet("CreateAnnio")]

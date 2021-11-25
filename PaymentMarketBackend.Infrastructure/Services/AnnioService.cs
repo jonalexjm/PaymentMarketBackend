@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using PaymentMarketBackend.Core.Entities;
 using PaymentMarketBackend.Core.Interfaces;
 using PaymentMarketBackend.Core.Interfaces.Services;
+using PaymentMarketBackend.Core.QueryFilters;
 
 namespace PaymentMarketBackend.Infrastructure.Services
 {
@@ -15,10 +16,17 @@ namespace PaymentMarketBackend.Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<Annio>> GetAllAnnio()
+        public async Task<List<Annio>> GetAllAnnio(AnnioQueryFilter filters)
         {
-            return this._unitOfWork.AnnioRepository.GetAll().ToList();
+            var annios = this._unitOfWork.AnnioRepository.GetAll().ToList();
+
+            if (filters.Annio != null)
+            {
+                annios = annios.Where(x => x.Annio1 == filters.Annio).ToList();
+            }
             
+            return annios;
+
         }
 
         public async Task CreateAnnio(Annio annio)
