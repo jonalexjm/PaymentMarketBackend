@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PaymentMarketBackend.Api.Responses;
 using PaymentMarketBackend.Core.DTOs;
 using PaymentMarketBackend.Core.Entities;
@@ -35,8 +36,18 @@ namespace PaymentMarketBackend.Api.Controllers
         public async Task<IActionResult> GetAllAnnios([FromQuery]AnnioQueryFilter filters)
         {
             var annios = await _annioService.GetAllAnnio(filters);
-            var anniosDto = _mapper.Map<List<AnnioDto>>(annios);
-            var response = new ApiResponse<List<AnnioDto>>(anniosDto);
+            var anniosDto = _mapper.Map<IEnumerable<AnnioDto>>(annios);
+            var response = new ApiResponse<IEnumerable<AnnioDto>>(anniosDto);
+            var metadata = new
+            {
+                annios.TotalCount,
+                annios.PageSize,
+                annios.CurrentPage,
+                annios.TotalPages,
+                annios.HasNextPage,
+                annios.HasPreviousPage
+            };
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
             return Ok(response);
         }
         
